@@ -121,7 +121,7 @@
 
   /* ---------- PUBLIC VIEW (existing minimal design) ---------- */
   main {
-    max-width: 680px;
+    max-width: 720px;
     margin: 0 auto;
     padding: 100px 24px 120px;
   }
@@ -193,15 +193,16 @@
     50% { transform: translate(30px,-40px) scale(1.12); }
   }
 
-  .private-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 120px 28px 130px; }
+  .private-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 100px 24px 120px; }
 
+  /* Content sits directly on the pastel gradient — no boxed container.
+     Only real controls (toggle, tabs) get the .glass treatment. */
   .glass-card {
-    border-radius: 32px;
-    padding: 40px;
-    margin-bottom: 32px;
+    margin-bottom: 64px;
   }
+  .glass-card:last-child { margin-bottom: 0; }
 
-  .private-header { margin-bottom: 8px; }
+  .private-header { margin-bottom: 56px; }
   .private-header .eyebrow {
     font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
     color: #8a6ad8; font-weight: 700; margin-bottom: 10px;
@@ -212,6 +213,7 @@
   .glass-card h3 {
     font-size: 18px; font-weight: 700; margin-bottom: 22px;
     display: flex; align-items: center; gap: 8px;
+    color: #333;
   }
 
   .apple-music-embed { width: 100%; max-width: 100%; border-radius: 16px; display: block; }
@@ -373,7 +375,7 @@
       <h2>적객</h2>
     </div>
 
-    <div class="glass-card glass">
+    <div class="glass-card">
       <h3>Replay Playlist</h3>
       <div class="year-tabs" id="yearTabs">
         <button class="year-tab" data-year="2022" data-src="https://embed.music.apple.com/kr/playlist/replay-2022/pl.rp-1kkWuEZ2Y1bN">2022</button>
@@ -393,7 +395,7 @@
       </iframe>
     </div>
 
-    <div class="glass-card glass">
+    <div class="glass-card">
       <h3>Favorite Anime</h3>
       <div class="anime-grid">
         <div class="anime-tile" style="background-image:url('https://cdn.myanimelist.net/images/anime/1530/117776l.jpg')"><span>무직전생</span></div>
