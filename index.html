@@ -6,7 +6,7 @@
 <title>한재영</title>
 <meta name="description" content="고려대학교 전기전자공학부 26학번 한재영의 포트폴리오">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://embed.music.apple.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data: https://cdn.myanimelist.net https://images.unsplash.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://embed.music.apple.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,6 +29,34 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ================= LIQUID GLASS MATERIAL =================
+     Approximates Apple's WWDC25 Liquid Glass: a translucent layer that
+     refracts what's behind it (via an SVG feDisplacementMap distortion),
+     plus a specular rim-light highlight. Chrome renders the true
+     refraction; other browsers fall back to blur+saturation only. */
+  .glass {
+    position: relative;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 8px 32px rgba(31,38,135,0.14), inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+  .glass {
+    backdrop-filter: url(#glass-distortion) blur(7px) saturate(180%);
+  }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.05) 35%, rgba(255,255,255,0.5) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
   /* ---------- MODE TOGGLE ---------- */
   .mode-toggle {
     position: fixed;
@@ -41,15 +69,10 @@
     padding: 8px 14px 8px 8px;
     border: none;
     border-radius: 999px;
-    background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 2px 16px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.7);
     cursor: pointer;
     font-size: 13px;
     font-weight: 500;
     color: var(--text);
-    transition: background 0.3s;
   }
   .toggle-track {
     position: relative;
@@ -84,12 +107,14 @@
     clip-path: circle(0% at var(--ox) var(--oy));
     opacity: 0;
     pointer-events: none;
-    transition: clip-path 0.85s cubic-bezier(.22,1,.36,1), opacity 0.4s ease;
+    filter: blur(24px) saturate(160%);
+    transition: clip-path 0.9s cubic-bezier(.22,1,.36,1), opacity 0.35s ease, filter 0.9s cubic-bezier(.22,1,.36,1);
   }
   body.is-private #privateView {
     clip-path: circle(150% at var(--ox) var(--oy));
     opacity: 1;
     pointer-events: auto;
+    filter: blur(0) saturate(100%);
   }
   #publicView { transition: opacity 0.3s ease, filter 0.3s ease; }
   body.is-private #publicView { opacity: 0; filter: blur(6px); pointer-events: none; }
@@ -171,14 +196,9 @@
   .private-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 110px 24px 120px; }
 
   .glass-card {
-    background: rgba(255,255,255,0.55);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.7);
-    border-radius: 26px;
+    border-radius: 28px;
     padding: 30px;
     margin-bottom: 26px;
-    box-shadow: 0 8px 32px rgba(31,38,135,0.12);
   }
 
   .private-header .eyebrow {
@@ -195,67 +215,143 @@
 
   .apple-music-embed { width: 100%; max-width: 100%; border-radius: 16px; display: block; }
 
+  .year-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .year-tab {
+    border: none;
+    background: rgba(255,255,255,0.5);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .year-tab.active { background: #1c1c22; color: #fff; }
+
   .anime-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 14px;
   }
   .anime-tile {
-    aspect-ratio: 1;
+    position: relative;
+    aspect-ratio: 2 / 3;
     border-radius: 14px;
-    background: linear-gradient(135deg,#ffd1dc,#c9d6ff);
-    display: flex;
-    align-items: flex-end;
-    padding: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #3a3a3c;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
   }
-  .anime-tile.title-2 { background: linear-gradient(135deg,#c9d6ff,#a1fdd0); }
+  .anime-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.75) 100%);
+  }
+  .anime-tile span {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 1;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
   .anime-tile.placeholder {
     background: repeating-linear-gradient(135deg, #f0f0f3, #f0f0f3 10px, #e8e8ee 10px, #e8e8ee 20px);
+  }
+  .anime-tile.placeholder::after { content: none; }
+  .anime-tile.placeholder span {
     color: var(--dim);
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    text-shadow: none;
+    top: 0; bottom: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center; text-align: center;
     font-weight: 500;
   }
 
-  .subway-hero {
+  /* Subway: deliberately breaks out of the centered column, full-bleed */
+  .subway-break {
     position: relative;
-    height: 220px;
-    border-radius: 20px;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+    height: 58vh;
+    min-height: 340px;
     overflow: hidden;
-    background: linear-gradient(180deg,#1c1c22,#33333c);
+    margin-top: 8px;
+    margin-bottom: 26px;
   }
-  .subway-hero .track-line {
-    position: absolute; left: 0; right: 0; bottom: 34px; height: 4px; background: rgba(255,255,255,0.15);
+  .subway-break img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    transform: scale(1.1);
+    animation: subwayDrift 16s ease-in-out infinite alternate;
+    filter: saturate(1.15) contrast(1.05);
   }
-  .subway-svg-wrap { position: absolute; inset: 0; display: flex; align-items: center; overflow: hidden; }
-  .subway-svg {
-    width: 130%;
-    max-width: none;
-    animation: trainPass 5.5s linear infinite;
+  @keyframes subwayDrift {
+    from { transform: scale(1.1) translateX(0); }
+    to   { transform: scale(1.22) translateX(-2.5%); }
   }
-  @keyframes trainPass {
-    0% { transform: translateX(70%); }
-    100% { transform: translateX(-70%); }
+  .subway-break .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.75) 100%);
   }
-  .subway-caption {
-    position: absolute; left: 20px; bottom: 14px; color: rgba(255,255,255,0.7);
-    font-size: 12px; letter-spacing: 1px; text-transform: uppercase;
+  .subway-break .subway-label {
+    position: absolute;
+    left: 24px; right: 24px; bottom: 22px;
+    z-index: 1;
+    color: #fff;
   }
+  .subway-break .subway-label .big {
+    font-size: clamp(30px, 6vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+  .subway-break .subway-label .caption {
+    margin-top: 4px;
+    font-size: 12.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+  }
+  .subway-credit {
+    text-align: right;
+    font-size: 11px;
+    color: rgba(0,0,0,0.32);
+    margin-top: -18px;
+    margin-bottom: 10px;
+    padding-right: 4px;
+  }
+  .subway-credit a { color: inherit; }
 
   @media (max-width: 480px) {
     .private-header h2 { font-size: 22px; }
-    .subway-hero { height: 170px; }
+    .subway-break { height: 42vh; min-height: 260px; }
   }
 </style>
 </head>
 <body>
 
-<button id="modeToggle" class="mode-toggle" aria-pressed="false" aria-label="Public / Personal 모드 전환">
+<!-- Hidden SVG filter powering the refractive "Liquid Glass" backdrop-filter (Chrome only; other browsers fall back to plain blur, see .glass rule) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="glass-distortion" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.009 0.012" numOctaves="2" seed="7" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="2.5" result="softNoise"/>
+    <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<button id="modeToggle" class="mode-toggle glass" aria-pressed="false" aria-label="Public / Personal 모드 전환">
   <span class="toggle-track"><span class="toggle-thumb"></span></span>
   <span class="toggle-text">Public</span>
 </button>
@@ -357,65 +453,46 @@
       <p class="sub">요즘 듣는 음악, 좋아하는 애니, 그리고 진심으로 사랑하는 지하철.</p>
     </div>
 
-    <div class="glass-card">
-      <h3>Playlist</h3>
+    <div class="glass-card glass">
+      <h3>Replay Playlist</h3>
+      <div class="year-tabs" id="yearTabs">
+        <button class="year-tab" data-year="2022" data-src="https://embed.music.apple.com/kr/playlist/replay-2022/pl.rp-1kkWuEZ2Y1bN">2022</button>
+        <button class="year-tab" data-year="2023" data-src="https://embed.music.apple.com/kr/playlist/replay-2023/pl.rp-6xxbi6oPnMvx">2023</button>
+        <button class="year-tab" data-year="2024" data-src="https://embed.music.apple.com/kr/playlist/replay-2024/pl.rp-AR59CMjX5Wev">2024</button>
+        <button class="year-tab active" data-year="2025" data-src="https://embed.music.apple.com/kr/playlist/replay-2025/pl.rp-kDODtwpd0oav">2025</button>
+      </div>
       <iframe
+        id="musicFrame"
         class="apple-music-embed"
         allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
         frameborder="0"
         height="450"
         sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
-        src="https://embed.music.apple.com/kr/playlist/%EB%A6%AC%ED%94%8C%EB%A0%88%EC%9D%B4-%EB%82%B4%EA%B0%80-%EA%B0%80%EC%9E%A5-%EC%A6%90%EA%B2%A8-%EB%93%A4%EC%9D%80-%EC%9D%8C%EC%95%85/pl.rp-j2COGw1Jg3"
-        title="내가 가장 즐겨 듣는 음악">
+        src="https://embed.music.apple.com/kr/playlist/replay-2025/pl.rp-kDODtwpd0oav"
+        title="Replay 2025">
       </iframe>
     </div>
 
-    <div class="glass-card">
+    <div class="glass-card glass">
       <h3>Favorite Anime</h3>
       <div class="anime-grid">
-        <div class="anime-tile">무직전생</div>
-        <div class="anime-tile title-2">메이드 인 어비스</div>
-        <div class="anime-tile placeholder">추가<br>예정</div>
-        <div class="anime-tile placeholder">추가<br>예정</div>
+        <div class="anime-tile" style="background-image:url('https://cdn.myanimelist.net/images/anime/1530/117776l.jpg')"><span>무직전생</span></div>
+        <div class="anime-tile" style="background-image:url('https://cdn.myanimelist.net/images/anime/6/86733l.jpg')"><span>메이드 인 어비스</span></div>
+        <div class="anime-tile placeholder"><span>추가<br>예정</span></div>
+        <div class="anime-tile placeholder"><span>추가<br>예정</span></div>
       </div>
     </div>
 
-    <div class="glass-card">
-      <h3>지하철</h3>
-      <div class="subway-hero">
-        <div class="track-line"></div>
-        <div class="subway-svg-wrap">
-          <svg class="subway-svg" viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-            <g stroke="#ffffff" stroke-opacity="0.25" stroke-width="5" stroke-linecap="round">
-              <line x1="-60" y1="80" x2="10" y2="80"/>
-              <line x1="-100" y1="105" x2="-10" y2="105"/>
-              <line x1="-50" y1="130" x2="20" y2="130"/>
-            </g>
-            <rect x="40" y="40" width="800" height="120" rx="34" fill="#f2f2f5"/>
-            <rect x="40" y="40" width="800" height="32" rx="16" fill="#c7c7cc"/>
-            <path d="M840 40 Q892 100 840 160 L800 160 L800 40 Z" fill="#f2f2f5"/>
-            <g fill="#4c6ef5">
-              <rect x="80" y="86" width="78" height="46" rx="10"/>
-              <rect x="176" y="86" width="78" height="46" rx="10"/>
-              <rect x="272" y="86" width="78" height="46" rx="10"/>
-              <rect x="368" y="86" width="78" height="46" rx="10"/>
-              <rect x="464" y="86" width="78" height="46" rx="10"/>
-              <rect x="560" y="86" width="78" height="46" rx="10"/>
-              <rect x="656" y="86" width="78" height="46" rx="10"/>
-              <rect x="752" y="86" width="60" height="46" rx="10"/>
-            </g>
-            <rect x="40" y="150" width="800" height="10" fill="#d64550"/>
-            <g fill="#1c1c22">
-              <circle cx="140" cy="176" r="20"/>
-              <circle cx="300" cy="176" r="20"/>
-              <circle cx="500" cy="176" r="20"/>
-              <circle cx="680" cy="176" r="20"/>
-            </g>
-          </svg>
-        </div>
-        <span class="subway-caption">Seoul Metro · 오늘도 정시 운행 중</span>
+    <h3 style="font-size:15px; font-weight:600; margin-bottom:4px; color:#333;">지하철</h3>
+    <div class="subway-break">
+      <img src="https://images.unsplash.com/photo-1749251639409-ec003d527e95?auto=format&fit=crop&w=1800&q=75" alt="측면에서 모션블러로 스쳐 지나가는 지하철 열차">
+      <div class="scrim"></div>
+      <div class="subway-label">
+        <div class="big">지하철</div>
+        <div class="caption">Seoul &amp; Tokyo Metro · 오늘도 정시 운행 중</div>
       </div>
     </div>
+    <p class="subway-credit">Photo by <a href="https://unsplash.com/@zoshuacolah" target="_blank" rel="noopener noreferrer">Zoshua Colah</a> on <a href="https://unsplash.com/photos/-YHKELELvJI" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
 
   </div>
 </div>

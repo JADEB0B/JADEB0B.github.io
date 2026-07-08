@@ -29,4 +29,19 @@
   var saved = null;
   try { saved = localStorage.getItem('site-mode'); } catch (e) {}
   setMode(saved === 'private');
+
+  // Replay playlist year tabs
+  var tabs = document.getElementById('yearTabs');
+  var musicFrame = document.getElementById('musicFrame');
+  if (tabs && musicFrame) {
+    tabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('.year-tab');
+      if (!btn) return;
+      var src = btn.getAttribute('data-src');
+      if (src && musicFrame.src !== src) musicFrame.src = src;
+      tabs.querySelectorAll('.year-tab').forEach(function (t) {
+        t.classList.toggle('active', t === btn);
+      });
+    });
+  }
 })();
