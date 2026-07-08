@@ -6,7 +6,7 @@
 <title>한재영</title>
 <meta name="description" content="고려대학교 전기전자공학부 26학번 한재영의 포트폴리오">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data: https://cdn.myanimelist.net https://images.unsplash.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://embed.music.apple.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data: https://cdn.myanimelist.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src https://embed.music.apple.com; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com;">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -193,36 +193,37 @@
     50% { transform: translate(30px,-40px) scale(1.12); }
   }
 
-  .private-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 110px 24px 120px; }
+  .private-inner { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 120px 28px 130px; }
 
   .glass-card {
-    border-radius: 28px;
-    padding: 30px;
-    margin-bottom: 26px;
+    border-radius: 32px;
+    padding: 40px;
+    margin-bottom: 32px;
   }
 
+  .private-header { margin-bottom: 8px; }
   .private-header .eyebrow {
-    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: #8a6ad8; font-weight: 600; margin-bottom: 8px;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: #8a6ad8; font-weight: 700; margin-bottom: 10px;
   }
-  .private-header h2 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
-  .private-header p.sub { color: #555; font-size: 15px; }
+  .private-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
+  .private-header p.sub { color: #555; font-size: 18px; }
 
   .glass-card h3 {
-    font-size: 15px; font-weight: 600; margin-bottom: 16px;
+    font-size: 18px; font-weight: 700; margin-bottom: 22px;
     display: flex; align-items: center; gap: 8px;
   }
 
   .apple-music-embed { width: 100%; max-width: 100%; border-radius: 16px; display: block; }
 
-  .year-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .year-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
   .year-tab {
     border: none;
     background: rgba(255,255,255,0.5);
     color: var(--text);
-    font-size: 13px;
-    font-weight: 600;
-    padding: 7px 14px;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 11px 22px;
     border-radius: 999px;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
@@ -231,8 +232,8 @@
 
   .anime-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 18px;
   }
   .anime-tile {
     position: relative;
@@ -251,11 +252,11 @@
   }
   .anime-tile span {
     position: absolute;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
     z-index: 1;
-    font-size: 12.5px;
+    font-size: 15px;
     font-weight: 700;
     color: #fff;
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
@@ -272,71 +273,8 @@
     font-weight: 500;
   }
 
-  /* Subway: deliberately breaks out of the centered column, full-bleed */
-  .subway-break {
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    width: 100vw;
-    height: 58vh;
-    min-height: 340px;
-    overflow: hidden;
-    margin-top: 8px;
-    margin-bottom: 26px;
-  }
-  .subway-break img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    transform: scale(1.1);
-    animation: subwayDrift 16s ease-in-out infinite alternate;
-    filter: saturate(1.15) contrast(1.05);
-  }
-  @keyframes subwayDrift {
-    from { transform: scale(1.1) translateX(0); }
-    to   { transform: scale(1.22) translateX(-2.5%); }
-  }
-  .subway-break .scrim {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.75) 100%);
-  }
-  .subway-break .subway-label {
-    position: absolute;
-    left: 24px; right: 24px; bottom: 22px;
-    z-index: 1;
-    color: #fff;
-  }
-  .subway-break .subway-label .big {
-    font-size: clamp(30px, 6vw, 52px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
-  }
-  .subway-break .subway-label .caption {
-    margin-top: 4px;
-    font-size: 12.5px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-  }
-  .subway-credit {
-    text-align: right;
-    font-size: 11px;
-    color: rgba(0,0,0,0.32);
-    margin-top: -18px;
-    margin-bottom: 10px;
-    padding-right: 4px;
-  }
-  .subway-credit a { color: inherit; }
-
   @media (max-width: 480px) {
-    .private-header h2 { font-size: 22px; }
-    .subway-break { height: 42vh; min-height: 260px; }
+    .private-header h2 { font-size: 26px; }
   }
 </style>
 </head>
@@ -404,22 +342,6 @@
     </details>
   </section>
 
-  <section id="writing">
-    <h2>Writing</h2>
-    <p><strong>상향식 및 하향식 순환선의 역세권 발달 역량 비교</strong></p>
-    <p class="muted">도쿄 야마노테선과 서울 지하철 2호선의 개통 맥락을 중심으로 · 교양 글쓰기 리포트</p>
-    <p class="muted">
-      두 도시의 순환선이 각각 상향식(자생적 확장)과 하향식(국가 주도 계획)으로 형성된 과정을 비교하고,
-      이 차이가 역세권 상업화와 개발 지표에 어떤 영향을 미쳤는지 분석한 글입니다.
-    </p>
-    <details class="proof">
-      <summary>전문 보기</summary>
-      <div class="proof-body">
-        <p class="muted" style="font-size:14px;"><a href="report.pdf" target="_blank" rel="noopener noreferrer">report.pdf 다운로드</a></p>
-      </div>
-    </details>
-  </section>
-
   <section id="model3d">
     <h2>3D Model</h2>
     <div class="pending-card">
@@ -449,8 +371,8 @@
 
     <div class="private-header">
       <p class="eyebrow">Personal</p>
-      <h2>공식 프로필 말고, 진짜 취향</h2>
-      <p class="sub">요즘 듣는 음악, 좋아하는 애니, 그리고 진심으로 사랑하는 지하철.</p>
+      <h2>요즘 듣는 거, 보는 거</h2>
+      <p class="sub">플레이리스트랑 좋아하는 애니 몇 개.</p>
     </div>
 
     <div class="glass-card glass">
@@ -466,7 +388,7 @@
         class="apple-music-embed"
         allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
         frameborder="0"
-        height="450"
+        height="500"
         sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
         src="https://embed.music.apple.com/kr/playlist/replay-2025/pl.rp-kDODtwpd0oav"
         title="Replay 2025">
@@ -482,17 +404,6 @@
         <div class="anime-tile placeholder"><span>추가<br>예정</span></div>
       </div>
     </div>
-
-    <h3 style="font-size:15px; font-weight:600; margin-bottom:4px; color:#333;">지하철</h3>
-    <div class="subway-break">
-      <img src="https://images.unsplash.com/photo-1749251639409-ec003d527e95?auto=format&fit=crop&w=1800&q=75" alt="측면에서 모션블러로 스쳐 지나가는 지하철 열차">
-      <div class="scrim"></div>
-      <div class="subway-label">
-        <div class="big">지하철</div>
-        <div class="caption">Seoul &amp; Tokyo Metro · 오늘도 정시 운행 중</div>
-      </div>
-    </div>
-    <p class="subway-credit">Photo by <a href="https://unsplash.com/@zoshuacolah" target="_blank" rel="noopener noreferrer">Zoshua Colah</a> on <a href="https://unsplash.com/photos/-YHKELELvJI" target="_blank" rel="noopener noreferrer">Unsplash</a></p>
 
   </div>
 </div>
